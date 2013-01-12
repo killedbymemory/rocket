@@ -3,8 +3,8 @@ rocket = {}
 local g = love.graphics
 
 function rocket.load()
-  rocket.widthScale = .08
-  rocket.image = rocket.image or g.newImage("assets/rocket.png")
+  rocket.widthScale = 1
+  rocket.image = rocket.image or g.newImage("assets/rocket_small.png")
   rocket.width = rocket.image:getWidth() * rocket.widthScale
   rocket.speed = 100;
   rocket.x = (g.getWidth() - rocket.width) / 2
