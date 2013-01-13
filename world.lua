@@ -14,6 +14,9 @@ function world.load()
   -- the height of a meter in created world
   p.setMeter(32)
 
+  -- userData
+  world.userData = "World"
+
   -- create a world for the bodies to exist in
   -- horizontal gravity set to 0
   -- vertical gravity set to 9.81
@@ -31,6 +34,7 @@ function world.load()
   ground.body = p.newBody(world.world, g.getWidth() / 2, 465 + (150/2))
   ground.shape = p.newRectangleShape(g.getWidth(), 150)
   ground.fixture = p.newFixture(ground.body, ground.shape)
+  ground.fixture:setUserData(world.userData)
 end
 
 function world.draw() 
