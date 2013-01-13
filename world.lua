@@ -19,7 +19,7 @@ function world.load()
 
   -- create a world for the bodies to exist in
   -- horizontal gravity set to 0
-  -- vertical gravity set to 9.81
+  -- vertical gravity set to 4.5 (samples usually use 9.81)
   world.world = p.newWorld(0, 4.5 * 32, true)
   
   -- table to hold all our physical objects
