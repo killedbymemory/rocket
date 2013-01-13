@@ -27,9 +27,10 @@ function world.load()
   -- shape: define width and height
   -- fixture: attach shape to body
   world.objects.ground = {}
-  world.objects.ground.body = p.newBody(world.world, g.getWidth() / 2, 465 + (150/2))
-  world.objects.ground.shape = p.newRectangleShape(g.getWidth(), 150)
-  world.objects.ground.fixture = p.newFixture(world.objects.ground.body, world.objects.ground.shape)
+  local ground = world.objects.ground
+  ground.body = p.newBody(world.world, g.getWidth() / 2, 465 + (150/2))
+  ground.shape = p.newRectangleShape(g.getWidth(), 150)
+  ground.fixture = p.newFixture(ground.body, ground.shape)
 end
 
 function world.draw() 
