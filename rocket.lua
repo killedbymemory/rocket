@@ -104,7 +104,7 @@ end
 
 function rocket.burst.show(dt)
   rocket.burst.visible = true
-  rocket.burst.scaleVertical = rocket.burst.scaleVertical + (dt / 4)
+  rocket.burst.scaleVertical = rocket.burst.scaleVertical + (dt / 2.75)
 end
 
 function rocket.burst.hide()
