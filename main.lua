@@ -1,21 +1,20 @@
-require "world"
-require "rocket"
+require "game"
+
+function love.conf(t)
+end
 
 function love.load()
-  world.load()
-  rocket.load()
+  game.load()
 end
 
 function love.draw()
-  world.draw()
-  rocket.draw()
+  game.draw()
 end
 
 function love.update(dt)
-  rocket.update(dt)
-  world.update(dt)
+  game.update(dt)
 end
 
 function love.keypressed(k)
-  rocket.keypressed(k)
+  game.keypressed(k)
 end
