@@ -5,3 +5,11 @@ http://www.headchant.com/2010/12/31/love2d-%E2%80%93-tutorial-part-2-pew-pew/
 Physics tutorial
 https://love2d.org/wiki/Tutorial:Physics
 
+How to quit based on keypress
+https://love2d.org/wiki/love.event.quit
+
+Lua metatables
+http://www.lua.org/manual/5.1/manual.html#2.8
+
+Named Arguments *hack*
+http://www.lua.org/pil/5.3.html
