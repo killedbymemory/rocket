@@ -6,10 +6,11 @@ References:
 world = {}
 
 local g, p = love.graphics, love.physics
+local bg = g.newImage("assets/bg.png")
 
 function world.load()
   -- world background
-  g.setBackgroundColor(255,255,255)
+  g.setBackgroundColor(0,0,0)
 
   -- the height of a meter in created world
   p.setMeter(32)
@@ -35,12 +36,21 @@ function world.load()
   ground.shape = p.newRectangleShape(g.getWidth(), 150)
   ground.fixture = p.newFixture(ground.body, ground.shape)
   ground.fixture:setUserData(world.userData)
+  ground.image = g.newImage("assets/ground.png")
+  ground.x, ground.y = world.objects.ground.body:getWorldPoint(world.objects.ground.shape:getPoints())
 end
 
-function world.draw() 
+function world.draw()
+  -- draw bg
+  g.draw(bg, 0, 0)
+
   -- draw ground
   g.setColor(196,196,196)
-  g.polygon("fill", world.objects.ground.body:getWorldPoints(world.objects.ground.shape:getPoints()))
+  g.draw(world.objects.ground.image, world.objects.ground.x, world.objects.ground.y)
+
+  --print(world.objects.ground.shape:getPoints())
+  --print(world.objects.ground.body:getWorldPoint(world.objects.ground.shape:getPoints()))
+  --g.polygon("fill", world.objects.ground.body:getWorldPoints(world.objects.ground.shape:getPoints()))
 end
 
 function world.update(dt)
