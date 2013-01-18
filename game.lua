@@ -2,10 +2,12 @@ require "world"
 require "rocket"
 
 game = {}
+game.over = false
 
 function game.load()
   world.load()
   rocket.load()
+  game.start()
 end
 
 function game.draw()
@@ -14,8 +16,12 @@ function game.draw()
 end
 
 function game.update(dt)
-  rocket.update(dt)
+  if not game.over then
+    rocket.update(dt)
+  end
+
   world.update(dt)
+
 end
 
 function game.keypressed(k)
@@ -23,5 +29,20 @@ function game.keypressed(k)
     love.event.quit()
   end
 
-  rocket.keypressed(k)
+  if k == 'return' then
+    -- restart
+    love.load()
+  end
+
+  if not game.over then
+    rocket.keypressed(k)
+  end
+end
+
+function game.start()
+  game.over = false
+end
+
+function game.stop()
+  game.over = true
 end
