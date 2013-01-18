@@ -38,6 +38,7 @@ function world.load()
   ground.fixture:setUserData(world.userData)
   ground.image = g.newImage("assets/ground.png")
   ground.x, ground.y = world.objects.ground.body:getWorldPoint(world.objects.ground.shape:getPoints())
+  ground.maxAcceptableLandingVelocity = 34
 end
 
 function world.draw()

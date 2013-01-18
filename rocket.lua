@@ -1,11 +1,15 @@
 rocket = {}
 rocket.body = {}
 rocket.burst = {}
+rocket.wreckedBody = {}
 
 local g, p = love.graphics, love.physics
 
 function rocket.load()
   rocket.distanceToBurst = 0
+  rocket.landingVelocity = 0
+  rocket.isLanded = false
+  rocket.isWrecked = false
 
   -- rocket body's image and properties
   rocket.body.image = rocket.body.image or g.newImage("assets/rocket_small.png")
@@ -26,6 +30,10 @@ function rocket.load()
   rocket.burst.scaleHorizontal = 1
 
 
+  -- wrecked rocket's body image
+  rocket.wreckedBody.image = rocket.wreckedBody.image or g.newImage("assets/wrecked_rocket_small.png")
+
+
   -- ground: body, shape, fixture(body, shape)
   -- body: shape will anchor at body's center
   -- shape: define width and height
@@ -44,7 +52,12 @@ function rocket.draw()
   -- draw rocket's body
   rocket.body.x = world.objects.rocket.body:getX() - (rocket.body.width / 2)
   rocket.body.y = world.objects.rocket.body:getY() - (rocket.body.height / 2)
-  g.draw(rocket.body.image, rocket.body.x, rocket.body.y, 0)
+
+  if rocket.isLanded and rocket.isWrecked then
+    g.draw(rocket.wreckedBody.image, rocket.body.x, rocket.body.y, 0)
+  else
+    g.draw(rocket.body.image, rocket.body.x, rocket.body.y, 0)
+  end
 
   -- draw rocket's flame burst
   if rocket.burst.visible then
@@ -93,13 +106,23 @@ function rocket.beginContact(firstFixture, secondFixture, contact)
     local vx,vy = world.objects.rocket.body:getLinearVelocityFromLocalPoint(g.getWidth() / 2, 465)
     print("rocket.linearVelocityFromLocalPoint: " .. vx .. "," .. vy)
 
-    vx,vy = world.objects.rocket.body:getLinearVelocityFromLocalPoint(g.getWidth() / 2, 465)
-    print("rocket.linearVelocityFromWorldPoint: " .. vx .. "," .. vy)
+    rocket.landingVelocity = vy
+
+    print(rocket.landingVelocity > world.objects.ground.maxAcceptableLandingVelocity);
+
+    if rocket.landingVelocity > world.objects.ground.maxAcceptableLandingVelocity then
+      -- kaboom
+      print('game over!')
+      rocket.landed()
+      rocket.wrecked()
+    else
+      -- yay
+      print('rocket successfully landed, congrats!')
+      rocket.landed()
+    end
   end
 
-  
-  --local vx, vy = contact:getVelocity()
-  --print('contact.getNormal(): ' .. vx .. ',' .. ny)
+  game.stop()
 end
 
 function rocket.burst.show(dt)
@@ -110,4 +133,12 @@ end
 function rocket.burst.hide()
   rocket.burst.visible = false
   rocket.burst.scaleHorizontal,rocket.burst.scaleVertical = 1,1
+end
+
+function rocket.landed()
+  rocket.isLanded = true
+end
+
+function rocket.wrecked()
+  rocket.isWrecked = true
 end
