@@ -111,3 +111,10 @@ function game.endScreen()
     g.draw(press_start.image, press_start.x, press_start.y)
   end
 end
+
+function game.instruction()
+  g.setColor(255,255,255)
+  g.print("spacebar: thrust/boost", 10, 10)
+  g.print("enter: restart", 10, 25)
+  g.print("esc: exit", 10, 40)
+end
