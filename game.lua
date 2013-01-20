@@ -14,11 +14,20 @@ local g, t = love.graphics, love.timer
 
 function game.load()
   game.screens.gameOver = game.screens.gameOver or {}
-  game.screens.gameOver.main = game.screens.gameOver.main or {}
-  game.screens.gameOver.main.image = game.screens.gameOver.main.image or g.newImage("assets/game_over.png")
-  game.screens.gameOver.main.width = game.screens.gameOver.main.width or game.screens.gameOver.main.image:getWidth()
-  game.screens.gameOver.main.height = game.screens.gameOver.main.height or game.screens.gameOver.main.image:getHeight()
-  game.screens.gameOver.main.x, game.screens.gameOver.main.y = 0,0
+  game.screens.gameOver.fail = game.screens.gameOver.fail or {}
+  game.screens.gameOver.fail.image = game.screens.gameOver.fail.image or g.newImage("assets/game_over.png")
+  game.screens.gameOver.fail.width = game.screens.gameOver.fail.width or game.screens.gameOver.fail.image:getWidth()
+  game.screens.gameOver.fail.height = game.screens.gameOver.fail.height or game.screens.gameOver.fail.image:getHeight()
+  game.screens.gameOver.fail.x, game.screens.gameOver.fail.y = 0,0
+
+  game.screens.gameOver.success = game.screens.gameOver.success or {}
+  game.screens.gameOver.success.image = game.screens.gameOver.success.image or g.newImage("assets/you_made_it.png")
+  game.screens.gameOver.success.width = game.screens.gameOver.success.width or game.screens.gameOver.success.image:getWidth()
+  game.screens.gameOver.success.height = game.screens.gameOver.success.height or game.screens.gameOver.success.image:getHeight()
+  game.screens.gameOver.success.x, game.screens.gameOver.success.y = 0,0
+
+  -- default game over image would be fail
+  game.screens.gameOver.main = game.screens.gameOver.fail
 
   game.screens.gameOver.press_start = game.screens.gameOver.press_start or {}
   game.screens.gameOver.press_start.image = game.screens.gameOver.press_start.image or g.newImage("assets/game_over_press_start.png")
@@ -38,9 +47,17 @@ function game.draw()
   world.draw()
   rocket.draw()
 
-  if rocket.isLanded and rocket.isWrecked then
+  if rocket.isLanded then
+    if rocket.isWrecked then
+      game.screens.gameOver.main = game.screens.gameOver.fail
+    else
+      game.screens.gameOver.main = game.screens.gameOver.success
+    end
+
     game.endScreen()
   end
+
+  game.instruction()
 end
 
 function game.update(dt)
